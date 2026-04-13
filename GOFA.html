@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>GOFA Academy | Golf Océan Football Academy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f5f7fc;
+      color: #1e2a3e;
+      line-height: 1.4;
+    }
+
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --royal-blue: #1e3a8a;
+      --gold-yellow: #fbbf24;
+      --white: #ffffff;
+      --light-gray: #f0f2f5;
+      --dark-text: #0f172a;
+      --soft-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+      --card-radius: 24px;
+    }
+
+    /* Layout principal */
+    .app-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: var(--white);
+      min-height: 100vh;
+      box-shadow: 0 0 40px rgba(0,0,0,0.05);
+      position: relative;
+      border-radius: 0;
+    }
+
+    /* Header */
+    .app-header {
+      background: var(--royal-blue);
+      padding: 20px 20px 12px;
+      color: white;
+      border-bottom-left-radius: 28px;
+      border-bottom-right-radius: 28px;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .logo {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 30%, var(--gold-yellow) 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .logo span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gold-yellow);
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+
+    .badge-sport {
+      background: rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* Navigation tabs */
+    .nav-tabs {
+      display: flex;
+      overflow-x: auto;
+      gap: 6px;
+      background: white;
+      padding: 10px 16px;
+      border-bottom: 1px solid #eef2f6;
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 10;
+      scrollbar-width: thin;
+    }
+
+    .nav-tabs button {
+      background: transparent;
+      border: none;
+      padding: 8px 16px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 40px;
+      transition: all 0.2s;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+      color: #4b5563;
+    }
+
+    .nav-tabs button.active {
+      background: var(--royal-blue);
+      color: white;
+      box-shadow: 0 2px 8px rgba(30,58,138,0.3);
+    }
+
+    /* Main content */
+    .main-content {
+      padding: 20px 18px 80px;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .active-page {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    /* Cartes & composants */
+    .hero-card {
+      background: linear-gradient(135deg, #0f2b5e, #1e3a8a);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      margin-bottom: 24px;
+      color: white;
+      position: relative;
+    }
+
+    .hero-img {
+      height: 160px;
+      background: url('https://placehold.co/600x400/1e3a8a/fbbf24?text=GOFA+MATCH') center/cover;
+      background-image: linear-gradient(95deg, #0f2b5e 0%, #1e3a8a 100%), url('https://images.unsplash.com/photo-1517466787929-bc90951d0972?w=600&auto=format');
+      background-blend-mode: overlay;
+      background-size: cover;
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 1.35rem;
+      margin: 20px 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 5px solid var(--gold-yellow);
+      padding-left: 12px;
+    }
+
+    .match-card, .news-card, .player-card, .transfer-card {
+      background: white;
+      border-radius: 20px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--soft-shadow);
+      border: 1px solid #edf2f7;
+      transition: transform 0.1s ease;
+    }
+
+    .match-result {
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--royal-blue);
+    }
+
+    .competition {
+      font-size: 0.7rem;
+      background: #eef2ff;
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 30px;
+      margin-top: 8px;
+    }
+
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .player-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .player-card {
+      text-align: center;
+      padding: 16px 8px;
+    }
+
+    .player-photo {
+      width: 80px;
+      height: 80px;
+      background: #cbd5e1;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--royal-blue);
+      background-image: url('https://randomuser.me/api/portraits/men/32.jpg');
+    }
+
+    /* formulaires */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 28px;
+      border: 1px solid #e2e8f0;
+      font-family: inherit;
+      background: #fafcff;
+    }
+
+    .btn-primary {
+      background: var(--royal-blue);
+      color: white;
+      border: none;
+      padding: 14px;
+      width: 100%;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #0f2b5e;
+      transform: scale(0.98);
+    }
+
+    .stat-item {
+      font-size: 0.75rem;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 16px;
+    }
+
+    .notification-banner {
+      background: #fffbeb;
+      border-left: 5px solid var(--gold-yellow);
+      padding: 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.7rem;
+      color: #6c757d;
+    }
+
+    .inline-icon {
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <div class="app-header">
+    <div class="logo-area">
+      <div class="logo">GOFA <span>Academy</span></div>
+      <div class="badge-sport">⚽ Le talent se construit ici</div>
+    </div>
+    <div style="font-size: 0.8rem; opacity: 0.9;">Golf Océan Football Academy – Mbour, Sénégal</div>
+  </div>
+
+  <!-- Navigation tabs -->
+  <div class="nav-tabs">
+    <button data-page="home" class="active">🏠 Accueil</button>
+    <button data-page="matches">🏆 Matchs</button>
+    <button data-page="players">👥 Joueurs</button>
+    <button data-page="academy">🏟 Académie</button>
+    <button data-page="gallery">📸 Galerie</button>
+    <button data-page="register">📝 Inscriptions</button>
+    <button data-page="rankings">📊 Classements</button>
+    <button data-page="transfers">🔄 Transferts</button>
+    <button data-page="contact">📞 Contact</button>
+  </div>
+
+  <div class="main-content">
+    <!-- ACCUEIL -->
+    <div id="home" class="page active-page">
+      <div class="hero-card">
+        <div class="hero-img"></div>
+      </div>
+      <div class="section-title">📢 Actualités</div>
+      <div class="news-card"><strong>🏆 GOFA remporte le tournoi des Prodiges</strong><br>Les U15 s'imposent 3-1 face à Guépard FC.</div>
+      <div class="news-card"><strong>⭐ Stage de détection</strong><br>Inscriptions ouvertes pour la nouvelle génération GOFA.</div>
+
+      <div class="section-title">⚽ Résultats récents</div>
+      <div class="match-card"><div class="flex-between"><span><strong>GOFA</strong> 2-1 Mballing</span> <span class="stat-item">U13 – Ligue des Prodiges</span></div></div>
+      <div class="match-card"><div class="flex-between"><span><strong>GOFA</strong> 3-0 Soleil FC</span> <span class="stat-item">U15 – Championnat</span></div></div>
+
+      <div class="section-title">📅 Prochains matchs</div>
+      <div class="match-card"><div><strong>GOFA vs Guépard</strong><br>📅 11 Avril 2026 • Ligue des Prodiges</div></div>
+      <div class="match-card"><div><strong>GOFA vs Mbour OSC</strong><br>📅 18 Avril 2026 • Derby régional</div></div>
+
+      <div class="section-title">📸 Photos récentes</div>
+      <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px;">
+        <div style="min-width: 100px; height: 100px; background:#b9c8ff; border-radius: 20px; background-image:url('https://placehold.co/200x200/1e3a8a/white?text=Match'); background-size:cover;"></div>
+        <div style="min-width: 100px; height: 100px; background:#fbbf24; border-radius: 20px; background-image:url('https://placehold.co/200x200/fbbf24/white?text=Training'); background-size:cover;"></div>
+        <div style="min-width: 100px; height: 100px; background:#0f172a; border-radius: 20px; background-image:url('https://placehold.co/200x200/0f172a/white?text=Academy'); background-size:cover;"></div>
+      </div>
+    </div>
+
+    <!-- MATCHS -->
+    <div id="matches" class="page">
+      <div class="section-title">⚽ Prochains matchs</div>
+      <div class="match-card"><strong>GOFA vs Guépard</strong><br>📅 11 Avril 2026 – Ligue des Prodiges</div>
+      <div class="match-card"><strong>GOFA vs AS Bambey</strong><br>📅 25 Avril 2026 – U17 Élite</div>
+      <div class="section-title">📋 Résultats récents</div>
+      <div class="match-card"><strong>GOFA 2-1 Mballing</strong><br>U13 – Ligue des Prodiges</div>
+      <div class="match-card"><strong>GOFA 1-1 Dakar SC</strong><br>U15 – Championnat</div>
+      <div class="section-title">🏆 Classements (vue rapide)</div>
+      <div class="match-card">Ligue des Prodiges : <strong>2ème</strong> | 12 pts</div>
+      <div class="match-card">Championnat des Légendes : <strong>1er</strong> | 18 pts</div>
+    </div>
+
+    <!-- JOUEURS -->
+    <div id="players" class="page">
+      <div class="section-title">👥 Effectif GOFA</div>
+      <div class="player-grid">
+        <div class="player-card"><div class="player-photo" style="background-image: url('https://randomuser.me/api/portraits/men/12.jpg');"></div><strong>Djibril Dieng</strong><br>Milieu central<br><span class="stat-item">U17 • 5 buts</span><br>⭐ Stage Maroc 🇲🇦</div>
+        <div class="player-card"><div class="player-photo" style="background-image: url('https://randomuser.me/api/portraits/men/45.jpg');"></div><strong>Oumar Maréa</strong><br>Attaquant<br><span class="stat-item">U15 • 12 buts</span></div>
+        <div class="player-card"><div class="player-photo" style="background-image: url('https://randomuser.me/api/portraits/men/22.jpg');"></div><strong>Pape Dame Diop</strong><br>Milieu offensif<br><span class="stat-item">U17 • 8 assists</span><br>🌍 International</div>
+        <div class="player-card"><div class="player-photo" style="background-image: url('https://randomuser.me/api/portraits/men/67.jpg');"></div><strong>Aliou Badiane</strong><br>Défenseur central<br><span class="stat-item">U15 • Capitaine</span></div>
+      </div>
+      <div class="match-card" style="margin-top: 12px;"><strong>📊 Statistiques collectives</strong> : 23 matchs | 14 victoires | 48 buts</div>
+    </div>
+
+    <!-- ACADEMIE -->
+    <div id="academy" class="page">
+      <div class="hero-card" style="padding: 20px; background: #0f2b5e;">
+        <h3 style="color: #fbbf24;">GOFA – Le talent se construit ici</h3>
+        <p style="margin-top: 8px;">Académie de référence à Mbour, formation de jeunes footballeurs d'excellence.</p>
+      </div>
+      <div class="section-title">📖 Histoire</div>
+      <div class="match-card">Fondée en 2015 par Cheikh Ahmed Tidjane Diene, GOFA a formé plus de 200 joueurs avec une vision: excellence et valeurs humaines.</div>
+      <div class="section-title">👨‍🏫 Staff technique</div>
+      <div class="match-card">🔹 Cheikh Diene – Directeur technique<br>🔹 Mamadou Fall – Entraîneur U15<br>🔹 Lamine Ndiaye – Préparateur physique</div>
+      <div class="section-title">💎 Valeurs</div>
+      <div class="match-card">Respect, Travail, Discipline, Excellence. La formation avant tout.</div>
+      <div class="section-title">🏟 Installations</div>
+      <div class="match-card">Terrain homologué, vestiaires, salle de musculation, hébergement pour stagiaires.</div>
+    </div>
+
+    <!-- GALERIE -->
+    <div id="gallery" class="page">
+      <div class="section-title">📸 Albums GOFA</div>
+      <div class="match-card"><strong>📸 Matchs</strong> – Dernier derby vs Mbour OSC</div>
+      <div class="match-card"><strong>🏋️ Entraînements</strong> – Séances intensives U13/U15</div>
+      <div class="match-card"><strong>🏆 Tournois</strong> – Vainqueur coupe des Légendes 2025</div>
+      <div class="match-card"><strong>🎉 Événements</strong> – Cérémonie de remise des diplômes GOFA</div>
+      <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 20px;">
+        <div style="background:#b9c8ff; height: 90px; border-radius: 20px; background-image:url('https://placehold.co/300x200/1e3a8a/white?text=Match'); background-size:cover;"></div>
+        <div style="background:#fbbf24; height: 90px; border-radius: 20px; background-image:url('https://placehold.co/300x200/fbbf24/white?text=Academy'); background-size:cover;"></div>
+        <div style="background:#2c3e66; height: 90px; border-radius: 20px; background-image:url('https://placehold.co/300x200/ffffff/blue?text=Training'); background-size:cover;"></div>
+      </div>
+    </div>
+
+    <!-- INSCRIPTIONS -->
+    <div id="register" class="page">
+      <div class="section-title">📝 Formulaire d'inscription</div>
+      <form id="registerForm">
+        <div class="form-group"><input type="text" id="nom" placeholder="Nom" required></div>
+        <div class="form-group"><input type="text" id="prenom" placeholder="Prénom" required></div>
+        <div class="form-group"><input type="date" id="birth" required></div>
+        <div class="form-group"><input type="text" id="poste" placeholder="Poste (ex: Attaquant, Milieu...)"></div>
+        <div class="form-group"><input type="tel" id="tel" placeholder="Téléphone parent" required></div>
+        <button type="submit" class="btn-primary">S’inscrire</button>
+        <p id="formFeedback" style="margin-top: 12px; font-size: 0.8rem; color: green;"></p>
+      </form>
+      <div class="notification-banner" style="margin-top: 20px;">⚡ Après validation, vous recevrez une confirmation.</div>
+    </div>
+
+    <!-- CLASSEMENTS -->
+    <div id="rankings" class="page">
+      <div class="section-title">🏆 Ligue des Prodiges</div>
+      <div class="match-card">1. GOFA – 18 pts<br>2. Guépard FC – 15 pts<br>3. Mballing – 12 pts</div>
+      <div class="section-title">🏅 Championnat des Légendes</div>
+      <div class="match-card">1. GOFA U17 – 22 pts<br>2. ASC Mbour – 19 pts</div>
+      <div class="section-title">⚡ Chade League</div>
+      <div class="match-card">Classement U15 : GOFA 1er avec 9 victoires.</div>
+      <div class="section-title">📊 Catégories</div>
+      <div class="flex-between"><span>U13 : 1ère place</span><span>U15 : 2ème place</span><span>U17 : 1ère place</span></div>
+    </div>
+
+    <!-- TRANSFERTS -->
+    <div id="transfers" class="page">
+      <div class="section-title">🔄 Transferts – Saison 2025/26</div>
+      <div class="transfer-card"><strong>Oumar Maréa</strong> → Atlantique Club ⚫🔵</div>
+      <div class="transfer-card"><strong>Baye Assane</strong> → Atlantique Club</div>
+      <div class="transfer-card"><strong>Ndiawar Dieng</strong> → Stade de Mbour</div>
+      <div class="transfer-card"><strong>Djime Cissé</strong> → Stade de Mbour</div>
+      <div class="transfer-card"><strong>Pa Bakary Sy</strong> → Stade de Mbour</div>
+      <div class="transfer-card"><strong>Fadilou Diouf</strong> → Olympique de Thiès</div>
+      <div class="transfer-card"><strong>Bassirou Baldé</strong> → Olympique de Thiès</div>
+      <div class="transfer-card"><strong>Pa Modou Sarr</strong> → MSA</div>
+      <div class="transfer-card"><strong>Ahmed Camara</strong> → MSA</div>
+      <div class="transfer-card"><strong>Youssou Mbaye</strong> → Demba Diop</div>
+      <div class="transfer-card"><strong>Aliou Badiane</strong> → Demba Diop</div>
+      <div class="transfer-card"><strong>Aly Dagaane</strong> → FC Aly Dagaane</div>
+      <div class="section-title" style="margin-top: 20px;">🌍 Joueurs à l’international</div>
+      <div class="transfer-card" style="background:#e6f0ff;"><strong>Papa Dame Diop</strong> → Flamengo 🇧🇷 (Brésil)</div>
+      <div class="notification-banner" style="margin-top: 12px;">⭐ Fierté GOFA : 15 joueurs formés puis transférés professionnels.</div>
+    </div>
+
+    <!-- CONTACT + NOTIFICATIONS -->
+    <div id="contact" class="page">
+      <div class="section-title">📞 Contact & Direction</div>
+      <div class="match-card"><strong>Président / DT :</strong> Cheikh Ahmed Tidjane Diene<br>📱 78 129 27 91<br>📧 cheikhdiene125@gmail.com<br>📍 Mbour – Sénégal (Stade GOFA, quartier Golf)</div>
+      <div class="section-title">🔔 Notifications GOFA</div>
+      <div class="notification-banner" id="notifPanel">
+        <p>⚽ Recevez résultats, matchs, infos académie :</p>
+        <button id="enableNotifBtn" class="btn-primary" style="background:#fbbf24; color:#1e3a8a; margin-top: 10px;">✅ Activer notifications (simulation)</button>
+        <p id="notifMsg" style="margin-top: 10px; font-size:0.75rem;"></p>
+      </div>
+      <div class="match-card"><strong>Suivez-nous :</strong> Facebook | Instagram GOFA Officiel</div>
+    </div>
+  </div>
+  <footer>© 2026 Golf Océan Football Academy – Espadons GOFA 🔵💛</footer>
+</div>
+
+<script>
+  // Navigation
+  const pages = document.querySelectorAll('.page');
+  const navBtns = document.querySelectorAll('.nav-tabs button');
+
+  function showPage(pageId) {
+    pages.forEach(page => {
+      page.classList.remove('active-page');
+      if (page.id === pageId) page.classList.add('active-page');
+    });
+    navBtns.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.getAttribute('data-page') === pageId) btn.classList.add('active');
+    });
+  }
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const pageId = btn.getAttribute('data-page');
+      showPage(pageId);
+    });
+  });
+
+  // Inscription form handling (simulate save)
+  const registerForm = document.getElementById('registerForm');
+  const feedback = document.getElementById('formFeedback');
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nom = document.getElementById('nom').value.trim();
+    const prenom = document.getElementById('prenom').value.trim();
+    const birth = document.getElementById('birth').value;
+    const tel = document.getElementById('tel').value.trim();
+    if (!nom || !prenom || !birth || !tel) {
+      feedback.style.color = 'red';
+      feedback.innerText = 'Veuillez remplir tous les champs obligatoires.';
+      return;
+    }
+    // Stockage local mock
+    const inscription = { nom, prenom, birth, poste: document.getElementById('poste').value, tel, date: new Date() };
+    let inscriptions = JSON.parse(localStorage.getItem('gofa_inscriptions') || '[]');
+    inscriptions.push(inscription);
+    localStorage.setItem('gofa_inscriptions', JSON.stringify(inscriptions));
+    feedback.style.color = 'green';
+    feedback.innerText = '✅ Inscription enregistrée ! Un responsable vous contactera.';
+    registerForm.reset();
+    setTimeout(() => { feedback.innerText = ''; }, 3000);
+  });
+
+  // Notification simulation (web push mock)
+  const notifBtn = document.getElementById('enableNotifBtn');
+  const notifMsg = document.getElementById('notifMsg');
+  if (notifBtn) {
+    notifBtn.addEventListener('click', () => {
+      if ('Notification' in window) {
+        Notification.requestPermission().then(perm => {
+          if (perm === 'granted') {
+            notifMsg.innerText = '🔔 Notifications activées (simulation). Vous recevrez des alertes GOFA.';
+            setTimeout(() => {
+              new Notification('GOFA Academy', { body: '⚽ Nouveau match: GOFA vs Guépard le 11 avril !', icon: '' });
+            }, 500);
+          } else {
+            notifMsg.innerText = 'Permission non accordée, mais vous pouvez suivre sur le site.';
+          }
+        });
+      } else {
+        notifMsg.innerText = 'Navigation classique: suivez nos réseaux pour les infos.';
+      }
+    });
+  }
+
+  // petit effet de mise en avant dynamique: résultats récents etc
+  // ajout d’un badge classement automatique
+  console.log('GOFA Platform ready – Espadons');
+  
+  // Optionnel: actualité transferts international améliorée
+  const internationalDiv = document.querySelector('#transfers .section-title:last-of-type');
+  if(internationalDiv) internationalDiv.style.marginTop = '18px';
+</script>
+</body>
+</html>
